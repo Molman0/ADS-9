@@ -21,7 +21,7 @@ class PMTree {
     ~PMTree();
     Node* getRoot() const { return root; }
     int getN() const { return n; }
-    int64_t getTotalPerms() const { return root ? root->subtree_perm_count : 0; }
+    int64_t getTotalPerms() const {}
 };
 
 std::vector<std::vector<char>> getAllPerms(const PMTree& tree);
