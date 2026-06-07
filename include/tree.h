@@ -6,22 +6,22 @@
 struct Node {
     char value;
     std::vector<Node*> children;
-    long long subtree_perm_count;
-    Node(char v) : value(v), subtree_perm_count(0) {}
+    int64_t subtree_perm_count;
+    explicit Node(char v) : value(v), subtree_perm_count(0) {}
     ~Node();
 };
 
 class PMTree {
-private:
+ private:
     Node* root;
     int n;
     Node* createNode(char value, const std::vector<char>& remaining);
-public:
-    PMTree(const std::vector<char>& in);
+ public:
+    explicit PMTree(const std::vector<char>& in);
     ~PMTree();
     Node* getRoot() const { return root; }
     int getN() const { return n; }
-    long long getTotalPerms() const { return root ? root->subtree_perm_count : 0; }
+    int64_t getTotalPerms() const { return root ? root->subtree_perm_count : 0; }
 };
 
 std::vector<std::vector<char>> getAllPerms(const PMTree& tree);
