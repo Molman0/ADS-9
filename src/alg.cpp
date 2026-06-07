@@ -11,6 +11,8 @@ Node::~Node() {
     for (Node* child : children) delete child;
 }
 
+int64_t PMTree::getTotalPerms() const { return root ? root->subtree_perm_count : 0; }
+ 
 Node* PMTree::createNode(char value, const std::vector<char>& remaining) {
     Node* node = new Node(value);
     if (remaining.empty()) {
