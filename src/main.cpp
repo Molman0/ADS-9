@@ -1,13 +1,15 @@
 // Copyright 2022 NNTU-CS
-#include "tree.h"
-#include <iostream>
+#include <algorithm>
 #include <chrono>
-#include <random>
+#include <cstdlib>
 #include <iomanip>
+#include <iostream>
+#include <fstream>
+#include <locale>
+#include <random>
 #include <vector>
 
-using namespace std;
-using namespace chrono;
+#include "tree.h"
 
 int main() {
     const int MAX_N = 8;
