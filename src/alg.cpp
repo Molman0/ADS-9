@@ -12,7 +12,7 @@ Node::~Node() {
 }
 
 int64_t PMTree::getTotalPerms() const {
-    return root ? root->subtree_perm_count : 0; 
+    return root ? root->subtree_perm_count : 0;
 }
 
 Node* PMTree::createNode(char value, const std::vector<char>& remaining) {
@@ -30,7 +30,8 @@ Node* PMTree::createNode(char value, const std::vector<char>& remaining) {
         Node* child = createNode(c, new_remaining);
         node->children.push_back(child);
     }
-    node->subtree_perm_count = node->children.size() * node->children[0]->subtree_perm_count;
+    node->subtree_perm_count = node->children.size() *
+                               node->children[0]->subtree_perm_count;
     return node;
 }
 
@@ -54,9 +55,9 @@ PMTree::PMTree(const std::vector<char>& in) : root(nullptr), n(in.size()) {
         root->children.push_back(child);
     }
     if (!root->children.empty()) {
-        root->subtree_perm_count = root->children.size() * root->children[0]->subtree_perm_count;
-    }
-    else {
+        root->subtree_perm_count = root->children.size() *
+                                   root->children[0]->subtree_perm_count;
+    } else {
         root->subtree_perm_count = 0;
     }
 }
@@ -65,12 +66,12 @@ PMTree::~PMTree() {
     delete root;
 }
 
-void dfsCollect(Node* node, std::vector<char>& current, std::vector<std::vector<char>>& result, bool isRoot) {
+void dfsCollect(Node* node, std::vector<char>& current,
+                std::vector<std::vector<char>>& result, bool isRoot) {
     if (!isRoot) current.push_back(node->value);
     if (node->children.empty()) {
         result.push_back(current);
-    }
-    else {
+    } else {
         for (Node* child : node->children) {
             dfsCollect(child, current, result, false);
         }
@@ -87,7 +88,8 @@ std::vector<std::vector<char>> getAllPerms(const PMTree& tree) {
     return result;
 }
 
-bool dfsFind(Node* node, std::vector<char>& current, int& counter, int target, bool isRoot, std::vector<char>& result) {
+bool dfsFind(Node* node, std::vector<char>& current, int& counter,
+             int target, bool isRoot, std::vector<char>& result) {
     if (!isRoot) current.push_back(node->value);
     if (node->children.empty()) {
         ++counter;
@@ -96,8 +98,7 @@ bool dfsFind(Node* node, std::vector<char>& current, int& counter, int target, b
             if (!isRoot) current.pop_back();
             return true;
         }
-    }
-    else {
+    } else {
         for (Node* child : node->children) {
             if (dfsFind(child, current, counter, target, false, result)) {
                 if (!isRoot) current.pop_back();
@@ -125,10 +126,10 @@ std::vector<char> getPerm2(const PMTree& tree, int num) {
     if (!root || root->subtree_perm_count < num) return {};
     std::vector<char> result;
     Node* current = root;
-    long long n = num;
+    int64_t n = num;
     while (!current->children.empty()) {
-        long long perms_per_child = current->children[0]->subtree_perm_count;
-        long long idx = (n - 1) / perms_per_child;
+        int64_t perms_per_child = current->children[0]->subtree_perm_count;
+        int64_t idx = (n - 1) / perms_per_child;
         Node* next = current->children[idx];
         result.push_back(next->value);
         n = (n - 1) % perms_per_child + 1;
